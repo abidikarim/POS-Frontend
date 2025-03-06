@@ -1,0 +1,39 @@
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <label class="block font-bold mb-2">Name</label>
+        <input type="text" pInputText class="w-full" formControlName="name" />
+        <div>
+            @if(categoryForm.invalid && (categoryForm.controls['name'].touched || categoryForm.controls['name'].dirty))
+            {
+            @if(categoryForm.controls['name'].errors?.['required']) {
+            <small class="text-red-500">Name is required</small>
+            }
+            }
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="block font-bold mb-2">Description</label>
+        <input type="text" pInputText class="w-full" formControlName="description" />
+        <div>
+            @if(categoryForm.invalid && (categoryForm.controls['description'].touched ||
+            categoryForm.controls['description'].dirty))
+            {
+            @if(categoryForm.controls['description'].errors?.['required']) {
+            <small class="text-red-500">Description is required</small>
+            }}
+        </div>
+    </div>
+    <div class="mb-4">
+        <label class="block font-bold mb-2">Logo</label>
+        <div class="flex gap-2">
+            <p-fileupload #fu mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload"
+                styleClass="justify-content-start" (onSelect)="onSelect($event)" #icon />
+            @if (selectedLogo) {
+            <p-button icon="pi pi-trash" severity="danger" (onClick)="onRemove()" />
+            }
+        </div>
+    </div>
+    <div class="text-center">
+        <p-button icon="pi pi-pen-to-square" label="Edit" [loading]="loading" type="submit" />
+    </div>
+</form>

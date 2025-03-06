@@ -1,0 +1,49 @@
+<div class="mt-4 mb-3 flex gap-2 ">
+    <p-button label="Add Product" icon="pi pi-plus" (onClick)="showAddDialog()" />
+    <p-button label="Import Products" icon="pi pi-file-import" (onClick)="showImportDialog()" />
+</div>
+<form class="mb-6" [formGroup]="form">
+    <div class="grid mb-2">
+        <div class="col"><input type="text" pInputText placeholder="Product name" class="w-full"
+                formControlName="name" /></div>
+        <div class="col"> <input type="text" pInputText placeholder="Category" class="w-full"
+                formControlName="category" />
+        </div>
+        <div class="col">
+            <p-inputnumber placeholder="Min price" styleClass="w-full" class="w-full" formControlName="min_price" />
+        </div>
+    </div>
+    <div class="grid">
+        <div class="col"> <p-inputnumber placeholder="Max price" class="w-full" styleClass="w-full"
+                formControlName="max_price"></p-inputnumber>
+        </div>
+        <div class="col"> <p-inputnumber [useGrouping]="false" placeholder="Min quantity" class="w-full"
+                styleClass="w-full" formControlName="min_quantity"></p-inputnumber></div>
+        <div class="col">
+            <p-inputnumber [useGrouping]="false" placeholder="Max quantity" class="w-full" styleClass="w-full"
+                formControlName="max_quantity"></p-inputnumber>
+        </div>
+    </div>
+</form>
+<div class="products">
+    @for (product of products; track $index) {
+    <div class="product" (click)="showEditDialog(product)">
+        <div class="flex justify-content-between align-items-center mb-3">
+            <div>
+                <h4 class="m-0">{{product.name}}</h4>
+                <span class="text-400">{{product.price}}</span>
+            </div>
+            <p-button icon="pi pi-trash" [outlined]="true" severity="danger"
+                (onClick)="$event.stopPropagation();delete($event,product.id)" />
+        </div>
+        <div class="flex gap-2 align-items-center">
+            <div class="image" (click)="$event.stopPropagation()">
+                <p-image [src]="product.image_link" alt="Image" [preview]="true" width="120" height="100" />
+            </div>
+            <p>Lorem ipsum dolor, sit amet consectetur.{{product.description}}</p>
+        </div>
+    </div>
+    }
+</div>
+<p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="total_records"
+    [rowsPerPageOptions]="[10, 20, 50,100]" [showCurrentPageReport]="true" />

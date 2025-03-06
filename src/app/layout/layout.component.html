@@ -1,0 +1,15 @@
+<p-drawer [(visible)]="visible" [closable]="false">
+    <ng-template #header>
+        <div class="flex items-center gap-2">
+            <span class="font-bold">Amy Elsner</span>
+        </div>
+    </ng-template>
+    <p-menu [model]="items" styleClass="h-full"></p-menu>
+    <ng-template #footer>
+        <div class="flex items-center gap-2">
+            <button pButton label="Account" icon="pi pi-user" class="w-full" outlined></button>
+            <button pButton label="Logout" icon="pi pi-sign-out" class="w-full" severity="danger" text></button>
+        </div>
+    </ng-template>
+</p-drawer><p-menubar [model]="itemsHeader" styleClass="shadow-1 mb-4" />
+<router-outlet></router-outlet>

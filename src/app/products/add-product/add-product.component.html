@@ -1,0 +1,100 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="mb-2 flex gap-2">
+        <div class="flex-1">
+            <label class="block font-bold mb-2">Name</label>
+            <input type="text" pInputText class="w-full" formControlName="name" />
+            <div>
+                @if(productForm.invalid && (productForm.controls['name'].touched || productForm.controls['name'].dirty))
+                {
+                @if(productForm.controls['name'].errors?.['required']) {
+                <small class="text-red-500">Name is required</small>
+                }
+                }
+            </div>
+        </div>
+        <div class="flex-1">
+            <label class="block font-bold mb-2">Description</label>
+            <input type="text" pInputText class="w-full" formControlName="description" />
+            <div>
+                @if(productForm.invalid && (productForm.controls['description'].touched ||
+                productForm.controls['description'].dirty))
+                {
+                @if(productForm.controls['description'].errors?.['required']) {
+                <small class="text-red-500">Description is required</small>
+                }}
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-2 flex gap-2">
+        <div class="flex-1">
+            <label class="block font-bold mb-2">Price</label>
+            <p-inputnumber formControlName="price" class="w-full" styleClass="w-full" />
+
+            <div>
+                @if(productForm.invalid && (productForm.controls['price'].touched ||
+                productForm.controls['price'].dirty))
+                {
+                @if(productForm.controls['price'].errors?.['required']) {
+                <small class="text-red-500">Price is required</small>
+                }
+                @if(productForm.controls['price'].errors?.['min']) {
+                <small class="text-red-500">Price should be positive</small>
+                }
+                }
+            </div>
+        </div>
+        <div class="flex-1">
+            <label class="block font-bold mb-2">Quantity</label>
+            <p-inputnumber [useGrouping]="false" formControlName="quantity" class="w-full" styleClass="w-full" />
+            <div>
+                @if(productForm.invalid && (productForm.controls['quantity'].touched ||
+                productForm.controls['quantity'].dirty))
+                {
+                @if(productForm.controls['quantity'].errors?.['required']) {
+                <small class="text-red-500">Quantity is required</small>
+                }
+                @if(productForm.controls['quantity'].errors?.['min']) {
+                <small class="text-red-500">Quantity should be positive</small>
+                }}
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-2">
+        <div>
+            <label class="block font-bold mb-2">Category</label>
+            <p-select [options]="categories" [filter]="true" [showClear]="true" placeholder="Select a Category"
+                class="w-full md:w-56" [appendTo]="'body'" formControlName="category_id" optionLabel="name"
+                optionValue="id"></p-select>
+            <div>
+                @if(productForm.invalid && (productForm.controls['category_id'].touched ||
+                productForm.controls['category_id'].dirty))
+                {
+                @if(productForm.controls['category_id'].errors?.['required']) {
+                <small class="text-red-500">Category is required</small>
+                }}
+            </div>
+        </div>
+    </div>
+    <div class="mb-4">
+        <div>
+            <label class="block font-bold mb-2">Image</label>
+            <div class="flex gap-2">
+                <p-fileupload #fu mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload"
+                    styleClass="justify-content-start" (onSelect)="onSelect($event)" #image />
+                @if (selectedImage) {
+                <p-button icon="pi pi-trash" severity="danger" (onClick)="onRemove()" />
+                }
+            </div>
+            <div>
+                @if(imageError) {
+                <small class="text-red-500">Image is required</small>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <p-button icon="pi pi-plus" label="Add" [loading]="loading" type="submit" />
+    </div>
+</form>
