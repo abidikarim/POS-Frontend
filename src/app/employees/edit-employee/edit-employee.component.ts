@@ -69,7 +69,6 @@ export class EditEmployeeComponent {
     }, { validators: [requiredCnss(), confirmPasswordValidator()] })
   }
   onSubmit() {
-    debugger
     if (this.editForm.invalid) {
       this.editForm.markAllAsTouched()
       return

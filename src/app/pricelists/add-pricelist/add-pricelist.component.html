@@ -1,0 +1,25 @@
+<form [formGroup]="addForm">
+    <div class="mb-3">
+        <label class="block mb-2 font-bold">Name</label>
+        <input type="text" pInputText formControlName="name" />
+        <div>
+            @if(addForm.invalid && (addForm.controls["name"].touched || addForm.controls["name"].dirty)) {
+            @if(addForm.controls["name"].errors?.["required"]){
+            <small class="text-red-500">Name is required</small>
+            }}
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="block mb-2 font-bold">Description</label>
+        <input type="text" pInputText formControlName="description" />
+        <div>
+            @if(addForm.invalid && (addForm.controls["description"].touched || addForm.controls["description"].dirty)) {
+            @if(addForm.controls["description"].errors?.["required"]){
+            <small class="text-red-500">Description is required</small>
+            }}
+        </div>
+    </div>
+    <div class="text-center">
+        <p-button icon="pi pi-plus" label="Add" [loading]="loading" type="submit" (onClick)="onSubmit()" />
+    </div>
+</form>

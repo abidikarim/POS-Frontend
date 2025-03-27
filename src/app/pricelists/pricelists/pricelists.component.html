@@ -1,0 +1,93 @@
+<p-button icon="pi pi-plus" label="Add Pricelist" styleClass="my-4" (onClick)="addDialog()" />
+<p-accordion [value]="0">
+    @for (pricelist of pricelists; track pricelist.name) {
+    <p-accordion-panel [value]="pricelist.id">
+        <p-accordion-header>
+            <div class="flex-1 flex align-items-center gap-2">
+                <p class="m-0" [style]="{minWidth:'100px'}"> {{ pricelist.name }}</p>
+                <p-button icon="pi pi-pencil" [rounded]="true" [text]="true"
+                    (onClick)="editPricelist(pricelist);$event.stopPropagation()" />
+                <p-button icon="pi pi-plus" [rounded]="true" [text]="true"
+                    (onClick)="addPricelistLine(pricelist.id);$event.stopPropagation()" />
+            </div>
+            <p class="m-0 flex-1">{{pricelist.description}}</p>
+        </p-accordion-header>
+        <p-accordion-content>
+            <p-table [value]="pricelist.pricelist_lines" [tableStyle]="{ 'min-width': '50rem' }" stripedRows>
+                <ng-template #header>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>New Price</th>
+                        <th>Quantity</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-line>
+                    @if(line.isEdit){
+                    <tr>
+                        <td>{{line.product.name}}</td>
+                        <td>
+                            <div class="flex flex-column gap-1">
+                                <p-inputnumber [(ngModel)]="line.new_price" [showButtons]="true" />
+                                <small *ngIf="line.new_price <= 0" class="text-red-500">Price must be greater than
+                                    0</small>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex flex-column gap-1">
+                                <p-inputnumber [(ngModel)]="line.min_quantity" [showButtons]="true" />
+                                <small *ngIf="line.min_quantity <= 0" class="text-red-500">Quantity must be greater than
+                                    0</small>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex flex-column gap-1">
+                                <p-datepicker [(ngModel)]="line.start_date" dateFormat="yy-mm-dd" [appendTo]="'body'"
+                                    [showIcon]="true" />
+                                <small *ngIf="line.start_date && line.end_date && line.start_date >= line.end_date"
+                                    class="text-red-500">
+                                    Start Date must be before End Date
+                                </small>
+                            </div>
+                        </td>
+                        <td> <p-datepicker [(ngModel)]="line.end_date" dateFormat="yy-mm-dd" [appendTo]="'body'"
+                                [showIcon]="true" />
+                        </td>
+                        <td>
+                            <div class="flex gap-2 justify-content-center">
+                                <p-button icon="pi pi-check" [rounded]="true" [outlined]="true"
+                                    (onClick)="onSaveChange(line)" [disabled]="isSaveDisabled(line)" />
+                                <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true"
+                                    (onClick)="onCancel(line)" />
+                            </div>
+                        </td>
+                    </tr>
+                    }@else {
+                    <tr>
+                        <td>{{ line.product.name }}</td>
+                        <td>{{ line.new_price }}</td>
+                        <td>{{ line.min_quantity }}</td>
+                        <td>{{ line.start_date | date:'dd-MMMM-yyyy' }}</td>
+                        <td>{{ line.end_date| date:'dd-MMMM-yyyy' }}</td>
+                        <td>
+                            <div class="flex justify-content-center gap-2">
+                                <p-button icon="pi pi-pen-to-square" [outlined]="true" (onClick)="editMode(line)" />
+                                <p-button icon="pi pi-trash" severity="danger" [outlined]="true"
+                                    (onClick)="deletePricelistLine(line.id,$event)" />
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </ng-template>
+                <ng-template #emptymessage>
+                    <tr>
+                        <td colspan="6">No Pricelist Lines</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-accordion-content>
+    </p-accordion-panel>
+    }
+</p-accordion>

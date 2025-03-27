@@ -43,7 +43,6 @@ export class EditCategoryComponent {
 
 
   onSelect(event: FileSelectEvent) {
-    debugger
     this.selectedLogo = event.files[0]
   }
   onRemove() {

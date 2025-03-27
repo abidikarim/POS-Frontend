@@ -1,0 +1,63 @@
+<form [formGroup]="searchForm" class="flex sm:flex-column md:flex-row gap-2 align-items-center mb-3">
+    <p-inputgroup styleClass="flex-1">
+        <p-inputgroup-addon>
+            <i class="pi pi-search"></i>
+        </p-inputgroup-addon>
+        <input pInputText placeholder="Order Ref" />
+    </p-inputgroup>
+    <p-inputgroup styleClass="flex-1">
+        <p-inputgroup-addon>
+            <i class="pi pi-search"></i>
+        </p-inputgroup-addon>
+        <input pInputText placeholder="Session Id" />
+    </p-inputgroup>
+    <p-inputgroup styleClass="flex-1">
+        <p-inputgroup-addon>
+            <i class="pi pi-search"></i>
+        </p-inputgroup-addon>
+        <input pInputText placeholder="Receipt Number" />
+    </p-inputgroup>
+    <p-inputgroup styleClass="flex-1">
+        <p-inputgroup-addon>
+            <i class="pi pi-search"></i>
+        </p-inputgroup-addon>
+        <input pInputText placeholder="Employee Name" />
+    </p-inputgroup>
+</form>
+<p-table [value]="orders" stripedRows [tableStyle]="{'min-width': '50rem'}" [paginator]="true" [rows]="rows"
+    [rowsPerPageOptions]="[10,25,50,100]" [showCurrentPageReport]="true" [totalRecords]="total_records"
+    [loading]="loading" (onPage)="onPageChanged($event)" [lazy]="true">
+    <ng-template #header>
+        <tr>
+            <th>Order Ref</th>
+            <th class="text-center">Session Id</th>
+            <th>Date</th>
+            <th class="text-center">Receipt Number</th>
+            <th>Employee</th>
+            <th>Customer</th>
+            <th class="text-center">Total</th>
+            <th class="text-center">Lines</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-order>
+        <tr>
+            <td>{{order.id}}</td>
+            <td class="text-center">{{order.session_id}}</td>
+            <td>{{order.created_at | date:"medium"}}</td>
+            <td class="text-center">{{order.number}}</td>
+            <td>{{order.session.employee.first_name}} {{order.session.employee.last_name}}</td>
+            <td>
+                @if(order.customer){
+                {{order.customer.name}}
+                }@else {--}
+            </td>
+            <td class="text-center">{{order.total_price}}</td>
+            <td class="text-center"><i class="pi pi-align-left"></i></td>
+        </tr>
+    </ng-template>
+    <ng-template #emptymessage>
+        <tr>
+            <td colspan="8">No Orders</td>
+        </tr>
+    </ng-template>
+</p-table>

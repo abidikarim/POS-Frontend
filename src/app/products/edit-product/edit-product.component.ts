@@ -84,11 +84,9 @@ export class EditProductComponent {
     })
   }
   onSelect(event: FileSelectEvent) {
-    debugger
     this.selectedImage = event.files[0]
   }
   onRemove() {
-    debugger
     this.selectedImage = undefined
     this.inputImage.clear()
   }

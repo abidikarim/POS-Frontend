@@ -1,0 +1,36 @@
+<form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+    <div class="flex gap-2 mb-3">
+        <div>
+            <label class="block mb-2 font-bold">Name</label>
+            <input pInputText formControlName="name" />
+            <div>
+                @if (addForm.invalid && (addForm.controls['name']).touched || addForm.controls['name'].dirty) {
+                @if (addForm.controls['name'].errors?.['required']) {
+                <small class="text-red-500">Name is required</small>
+                }}
+            </div>
+        </div>
+        <div>
+            <label class="block mb-2 font-bold">Email</label>
+            <input pInputText formControlName="email" />
+            <div>
+                @if (addForm.invalid && (addForm.controls['email']).touched || addForm.controls['email'].dirty) {
+                @if (addForm.controls['email'].errors?.['required']) {
+                <small class="text-red-500">Email is required</small>
+                }@else if (addForm.controls['email'].errors?.['invalidEmail']){
+                <small class="text-red-500">Invalid email</small>
+                }}
+            </div>
+        </div>
+    </div>
+    <div class="mb-4">
+        <label class="block mb-2 font-bold">Pricelist</label>
+        <p-select [options]="pricelists" optionLabel="name" optionValue="id" [filter]="true" filterBy="name"
+            [showClear]="true" placeholder="Select a Pricelist" class="w-full md:w-56" [appendTo]="'body'"
+            formControlName="pricelist_id">
+        </p-select>
+    </div>
+    <div class="text-center">
+        <p-button icon="pi pi-user-plus" label="Add Customer" [loading]="loading" type="submit" />
+    </div>
+</form>

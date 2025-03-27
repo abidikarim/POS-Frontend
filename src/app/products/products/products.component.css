@@ -24,20 +24,7 @@
     overflow: hidden;
 }
 
-.product h4 {
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin: 0;
-}
-
 .product span {
     font-size: 0.875rem;
     color: #666;
-}
-
-.product p {
-    font-size: 0.875rem;
-    color: #444;
-    margin: 0;
-    width: 100px;
 }

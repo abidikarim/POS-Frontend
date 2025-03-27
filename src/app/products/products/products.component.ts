@@ -60,7 +60,6 @@ export class ProductsComponent {
     this.loadProducts()
   }
   onValueChanged(data: any) {
-    debugger
     this.filter = new ProductFilter(1, this.filter.limit, data.name, data.category, data.min_price || 0, data.max_price || 0, data.min_quantity || 0, data.max_quantity || 0)
     this.loadProducts()
   }
@@ -121,7 +120,7 @@ export class ProductsComponent {
       this.loadProducts()
     })
   }
-  delete(event: Event, id: number) {
+  delete(event: Event, id: string) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Do you want to delete this product?',

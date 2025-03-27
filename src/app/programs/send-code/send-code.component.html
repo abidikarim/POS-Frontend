@@ -1,0 +1,21 @@
+<form [formGroup]="sendForm">
+    <label class="block mb-2 font-bold">Select customer</label>
+    <p-select [options]="customers" optionLabel="name" optionValue="id" placeholder="Select a Customer" class="w-full"
+        [appendTo]="'body'" [filter]="true" (onFilter)="customerFilter($event)" formControlName="customer_id">
+        <ng-template #empty>
+            <div class="text-center">
+                <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+            </div>
+        </ng-template>
+    </p-select>
+    <div>
+        @if(sendForm.invalid && (sendForm.controls['customer_id'].touched ||
+        sendForm.controls['customer_id'].dirty)) {
+        @if(sendForm.controls['customer_id'].errors?.['required']) {
+        <small class="text-red-500">Customer is required</small>
+        }}
+    </div>
+    <div class="text-center mt-3">
+        <p-button icon="pi pi-send" label="Send" [loading]="loading" (onClick)="onSubmit()" />
+    </div>
+</form>

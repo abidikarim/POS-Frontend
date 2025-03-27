@@ -1,0 +1,79 @@
+<form [formGroup]="addForm">
+    <div class="mb-3 flex gap-2">
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">Category</label>
+            <p-select [options]="categories" optionLabel="name" optionValue="name" [filter]="true" filterBy="name"
+                [showClear]="true" placeholder="Select a Category" styleClass="w-full" class="w-full"
+                [appendTo]="'body'" (onFilter)="onFilterCategory($event)"
+                (onChange)="onChangeCategory($event)"></p-select>
+        </div>
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">Product</label>
+            <p-select [options]="prodcuts" optionLabel="name" optionValue="id" [filter]="true" filterBy="name"
+                [showClear]="true" placeholder="Select a Product" formControlName="product_id" styleClass="w-full"
+                class="w-full" [appendTo]="'body'" (onFilter)="onFilterProduct($event)"></p-select>
+        </div>
+    </div>
+    <div class="mb-3 flex gap-2">
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">New price</label>
+            <p-inputnumber mode="decimal" [useGrouping]="false" formControlName="new_price" class="w-full"
+                styleClass="w-full" />
+            <div>
+                @if(addForm.invalid && (addForm.controls["new_price"].touched || addForm.controls["new_price"].dirty)) {
+                @if(addForm.controls["new_price"].errors?.["required"]){
+                <small class="text-red-500">New price is required</small>
+                }
+                @if(addForm.controls["new_price"].errors?.["min"]){
+                <small class="text-red-500">New price should be > 0</small>
+                }}
+            </div>
+        </div>
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">Min quantity</label>
+            <p-inputnumber mode="decimal" [useGrouping]="false" formControlName="min_quantity" class="w-full"
+                styleClass="w-full" />
+            <div>
+                @if(addForm.invalid && (addForm.controls["min_quantity"].touched ||
+                addForm.controls["min_quantity"].dirty)) {
+                @if(addForm.controls["min_quantity"].errors?.["required"]){
+                <small class="text-red-500">Quantity is required</small>
+                }
+                @if(addForm.controls["min_quantity"].errors?.["min"]){
+                <small class="text-red-500">Quantity should be > 0</small>
+                }}
+            </div>
+        </div>
+    </div>
+    <div class="mb-3 flex gap-2">
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">Start date</label>
+            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" formControlName="start_date" [appendTo]="'body'"
+                styleClass="w-full" dateFormat="yy-mm-dd" />
+            <div>
+                @if(addForm.invalid && (addForm.controls["start_date"].touched ||
+                addForm.controls["start_date"].dirty)) {
+                @if(addForm.controls["start_date"].errors?.["required"]){
+                <small class="text-red-500">Start date is required</small>
+                }@if(addForm.errors?.['invalidStartDate']) {
+                <small class="text-red-500">Start date must be before end date</small>
+                }}
+            </div>
+        </div>
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">End date</label>
+            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" formControlName="end_date" [appendTo]="'body'"
+                styleClass="w-full" dateFormat="yy-mm-dd" />
+            <div>
+                @if(addForm.invalid && (addForm.controls["end_date"].touched ||
+                addForm.controls["end_date"].dirty)) {
+                @if(addForm.controls["end_date"].errors?.["required"]){
+                <small class="text-red-500">End date is required</small>
+                }}
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <p-button icon="pi pi-plus" label="Add" [loading]="loading" type="submit" (onClick)="onSubmit()" />
+    </div>
+</form>

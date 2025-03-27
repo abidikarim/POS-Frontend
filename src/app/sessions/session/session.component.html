@@ -1,0 +1,15 @@
+<div class="w-full flex justify-content-between p-2">
+    <p>{{session.employee.first_name}} {{session.employee.last_name}}</p>
+    <div>
+        <p-menu #menu [model]="items" [popup]="true" />
+        <p-button (click)="menu.toggle($event)" label="Exit Session" />
+    </div>
+</div>
+<div>
+    <div class="order">
+        order
+    </div>
+    <div>
+        <p-menu [model]="categoriesItems" />
+    </div>
+</div>

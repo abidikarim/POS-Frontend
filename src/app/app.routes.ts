@@ -7,6 +7,11 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ConfirmAccountComponent } from './employees/confirm-account/confirm-account.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EmployeesListComponent } from './employees/employees-list/employees-list.component';
+import { DiscountDetailsComponent } from './discount-details/discount-details.component';
+import { CustomersComponent } from './customers/customers/customers.component';
+import { SessionsComponent } from './sessions/sessions/sessions.component';
+import { NotfoundComponent } from './notfound/notfound.component';
+import { OrdersComponent } from './orders/orders/orders.component';
 
 export const routes: Routes = [
     { path: "", redirectTo: "/login", pathMatch: "full" },
@@ -20,8 +25,12 @@ export const routes: Routes = [
         children: [
             { path: "dashboard", component: DashboardComponent, title: "Dashboard" },
             { path: "employees", component: EmployeesListComponent, title: "Employees" },
-            { path: "stockDetails", component: StockDetailsComponent, title: "Stock" }
+            { path: "stockDetails", component: StockDetailsComponent, title: "Stock" },
+            { path: "discountDetails", component: DiscountDetailsComponent, title: "Discount" },
+            { path: "customers", component: CustomersComponent, title: "Customers" },
+            { path: "sessions", component: SessionsComponent, title: "Sessions" },
+            { path: "orders", component: OrdersComponent, title: "Orders" }
         ]
-
-    }
+    },
+    { path: "**", component: NotfoundComponent, title: "Not Found" }
 ];

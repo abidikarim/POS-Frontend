@@ -61,7 +61,6 @@ export class AddProductComponent {
     })
   }
   onSubmit() {
-    debugger
     this.imageError = !this.selectedImage
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched()

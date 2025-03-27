@@ -13,7 +13,6 @@ import { cnssNumberValidator } from '../../shared/validators/cnss-number-validat
 import { InputNumberModule } from 'primeng/inputnumber';
 import { EmployeeBase } from '../../shared/models/employee-base';
 import { EmployeeService } from '../../services/employee/employee.service';
-import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { formatDate } from '@angular/common';

@@ -41,6 +41,7 @@ export class LayoutComponent {
     {
       label: 'Customers',
       icon: 'pi pi-users',
+      routerLink: "/customers",
       command: () => {
         this.visible = !this.visible
       }
@@ -64,6 +65,7 @@ export class LayoutComponent {
     {
       label: 'Orders',
       icon: 'pi pi-shopping-cart',
+      routerLink: "/orders",
       command: () => {
         this.visible = !this.visible
       }
@@ -71,6 +73,7 @@ export class LayoutComponent {
     {
       label: 'Sessions',
       icon: 'pi pi-clock',
+      routerLink: "/sessions",
       command: () => {
         this.visible = !this.visible
       }
@@ -78,6 +81,7 @@ export class LayoutComponent {
     {
       label: 'Discount & Loyalty',
       icon: 'pi pi-credit-card',
+      routerLink: "/discountDetails",
       command: () => {
         this.visible = !this.visible
       }

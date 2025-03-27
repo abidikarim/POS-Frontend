@@ -37,7 +37,7 @@ export class CategoriesComponent {
   pg_params: PaginationParams = new PaginationParams()
   ref!: DynamicDialogRef
   searchForm: FormGroup
-
+  rowsOptions: number[] = [5, 10, 50, 100]
   constructor(
     private categoryService: CategoryService,
     private dialogService: DialogService,
@@ -59,6 +59,7 @@ export class CategoriesComponent {
         this.categories = res.list
         this.total_records = res.total_records
         this.rows = res.page_size
+        this.updateRowsOptions(this.rows)
         this.loading = false
       },
       error: (error) => {
@@ -144,5 +145,8 @@ export class CategoriesComponent {
   onValueChanged(data: any) {
     this.pg_params = new PaginationParams(data.name, 1, this.pg_params.limit)
     this.loadCategories()
+  }
+  updateRowsOptions(newRows: number) {
+    this.rowsOptions = Array.from(new Set([...this.rowsOptions, newRows])).sort((a, b) => a - b);
   }
 }

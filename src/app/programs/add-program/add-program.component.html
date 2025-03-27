@@ -1,0 +1,139 @@
+<form [formGroup]="addProgram">
+    <div class="flex gap-2 mb-3">
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">Name</label>
+            <input type="text" pInputText class="w-full" formControlName="name" />
+            <div>
+                @if(addProgram.invalid && (addProgram.controls['name'].touched ||
+                addProgram.controls['name'].dirty)) {
+                @if(addProgram.controls['name'].errors?.['required']) {
+                <small class="text-red-500">Name is required</small>
+                }}
+            </div>
+        </div>
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">Program Type</label>
+            <p-select [options]="programTypes" optionLabel="label" optionValue="value"
+                placeholder="Select a Program Type" class="w-full" [appendTo]="'body'"
+                (onChange)="changeProgramType($event)" formControlName="program_type" />
+            <div>
+                @if(addProgram.invalid && (addProgram.controls['program_type'].touched ||
+                addProgram.controls['program_type'].dirty)) {
+                @if(addProgram.controls['program_type'].errors?.['required']) {
+                <small class="text-red-500">Program type is required</small>
+                }}
+            </div>
+        </div>
+    </div>
+    <div class=" mb-3">
+        <label class="block mb-2 font-bold">Description</label>
+        <textarea rows="3" pTextarea class="w-full" formControlName="description">
+        </textarea>
+    </div>
+    <div class="flex gap-2 mb-3">
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">Start date</label>
+            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" [appendTo]="'body'" styleClass="w-full"
+                formControlName="start_date" />
+            <div>
+                @if(addProgram.invalid && (addProgram.controls['start_date'].touched ||
+                addProgram.controls['start_date'].dirty)) {
+                @if(addProgram.controls['start_date'].errors?.['required']) {
+                <small class="text-red-500">Start date is required</small>
+                }@if(addProgram.errors?.['invalidStartDate']) {
+                <small class="text-red-500">Start date must be before end date</small>
+                }}
+            </div>
+        </div>
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">End date</label>
+            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" [appendTo]="'body'" styleClass="w-full"
+                formControlName="end_date" />
+            <div>
+                @if(addProgram.invalid && (addProgram.controls['end_date'].touched ||
+                addProgram.controls['end_date'].dirty)) {
+                @if(addProgram.controls['end_date'].errors?.['required']) {
+                <small class="text-red-500">End date is required</small>
+                }}
+            </div>
+        </div>
+    </div>
+    @if(programType == "BuyXgetY") {
+    <div class="flex gap-2 mb-4">
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">Product to buy</label>
+            <p-select [options]="productsToBuy" optionLabel="name" optionValue="id"
+                placeholder="Select a Product to buy" class="w-full" [appendTo]="'body'" [filter]="true"
+                (onFilter)="productFilter('buy',$event)" (onChange)="onSelectProduct($event,'buy')"
+                formControlName="product_to_buy_id">
+                <ng-template #empty>
+                    <div class="text-center">
+                        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+                    </div>
+                </ng-template>
+            </p-select>
+            <div>
+                @if(addProgram.invalid && (addProgram.controls['product_to_buy_id'].touched ||
+                addProgram.controls['product_to_buy_id'].dirty)) {
+                @if(addProgram.controls['product_to_buy_id'].errors?.['required']) {
+                <small class="text-red-500">Product to buy is required</small>
+                }}
+            </div>
+        </div>
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">Product to get</label>
+            <p-select [options]="productsToGet" optionLabel="name" optionValue="id"
+                placeholder="Select a Product to get" class="w-full" [appendTo]="'body'" [filter]="true"
+                (onFilter)="productFilter('get',$event)" (onChange)="onSelectProduct($event,'get')"
+                formControlName="product_to_get_id">
+                <ng-template #empty>
+                    <div class="text-center">
+                        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+                    </div>
+                </ng-template>
+            </p-select>
+            <div>
+                @if(addProgram.invalid && (addProgram.controls['product_to_get_id'].touched ||
+                addProgram.controls['product_to_get_id'].dirty)) {
+                @if(addProgram.controls['product_to_get_id'].errors?.['required']) {
+                <small class="text-red-500">Product to get is required</small>
+                }}
+            </div>
+        </div>
+    </div>
+    }@else {
+    <div class="flex gap-2 mb-4">
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">Discount</label>
+            <p-inputnumber mode="decimal" [useGrouping]="false" [showButtons]="true" styleClass="w-full" class="w-full"
+                formControlName="discount" />
+            <div>
+                @if(addProgram.invalid && (addProgram.controls['discount'].touched ||
+                addProgram.controls['discount'].dirty)) {
+                @if(addProgram.controls['discount'].errors?.['required']) {
+                <small class="text-red-500">Discount is required</small>
+                }@if(addProgram.controls['discount'].errors?.['min']) {
+                <small class="text-red-500">Discount should be > 0</small>
+                }}
+            </div>
+        </div>
+        <div class="flex-1">
+            <label class="block mb-2 font-bold">Item count</label>
+            <p-inputnumber mode="decimal" [useGrouping]="false" [showButtons]="true" tyleClass="w-full" class="w-full"
+                formControlName="items_count" />
+            <div>
+                @if(addProgram.invalid && (addProgram.controls['items_count'].touched ||
+                addProgram.controls['items_count'].dirty)) {
+                @if(addProgram.controls['items_count'].errors?.['required']) {
+                <small class="text-red-500">Items is required</small>
+                }@if(addProgram.controls['items_count'].errors?.['min']) {
+                <small class="text-red-500">Items should be > 0</small>
+                }}
+            </div>
+        </div>
+    </div>
+    }
+    <div class="text-center">
+        <p-button icon="pi pi-plus" label="Add" [loading]="loading" (onClick)="onSubmit()" />
+    </div>
+</form>

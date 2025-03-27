@@ -19,15 +19,15 @@ export class ProductService {
       "content-type": "application/json",
       Authorization: "Bearer " + localStorage.getItem("token")
     })
-    const params = new HttpParams()
-      .set("name", filter.name)
-      .set("page", filter.page)
-      .set("limit", filter.limit)
-      .set("category", filter.category)
-      .set("min_price", filter.min_price)
-      .set("max_price", filter.max_price)
-      .set("min_quantity", filter.min_quantity)
-      .set("max_quantity", filter.max_quantity)
+    let params = new HttpParams()
+    if (filter.name) params = params.set("name", filter.name)
+    if (filter.page) params = params.set("page", filter.page)
+    if (filter.limit) params = params.set("limit", filter.limit)
+    if (filter.category) params = params.set("category", filter.category)
+    if (filter.min_price) params = params.set("min_price", filter.min_price)
+    if (filter.max_price) params = params.set("max_price", filter.max_price)
+    if (filter.min_quantity) params = params.set("min_quantity", filter.min_quantity)
+    if (filter.max_quantity) params = params.set("max_quantity", filter.max_quantity)
     return this.http.get<PagedResponse<ProductOut>>(`${baseUrl}/product`, { headers, params })
   }
   add(data: ProductBase, file: File | undefined) {
@@ -39,7 +39,7 @@ export class ProductService {
     if (file) formData.append("product_image", file)
     return this.http.post<BaseOut>(`${baseUrl}/product`, formData, { headers })
   }
-  edit(data: ProductBase, file: File | undefined, id: number) {
+  edit(data: ProductBase, file: File | undefined, id: string) {
     const headers = new HttpHeaders({
       Authorization: "Bearer " + localStorage.getItem("token")
     })
@@ -48,7 +48,7 @@ export class ProductService {
     if (file) formData.append("product_image", file)
     return this.http.put<BaseOut>(`${baseUrl}/product/${id}`, formData, { headers })
   }
-  delete(id: number) {
+  delete(id: string) {
     const headers = new HttpHeaders({
       "content-type": "application/json",
       Authorization: "Bearer " + localStorage.getItem("token")

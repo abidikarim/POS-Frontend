@@ -15,17 +15,17 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  get(pg_params: PaginationParams) {
+  get(filter: PaginationParams) {
     const headers = new HttpHeaders({
       "Content-type": "application/json",
       Authorization: "Bearer " + localStorage.getItem("token")
     })
-    const params = new HttpParams()
-      .set('limit', pg_params.limit)
-      .set('page', pg_params.page)
-      .set('name', pg_params.name)
+    let params = new HttpParams()
+    if (filter.name) params = params.set("name", filter.name)
+    if (filter.limit) params = params.set("limit", filter.limit)
+    if (filter.page) params = params.set("page", filter.page)
 
-    return this.http.get<PagedResponse<EmployeeBase>>(`${baseUrl}/employee`, { headers, params })
+    return this.http.get<PagedResponse<EmployeeBase>>(`${baseUrl}/employee/`, { headers, params })
   }
   getPossibleFields() {
     const headers = new HttpHeaders({

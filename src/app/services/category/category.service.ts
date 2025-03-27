@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PaginationParams } from '../../shared/models/pagination-params';
 import { PagedResponse } from '../../shared/models/paged-response';
 import { CategoryOut } from '../../shared/models/category-out';
 import { baseUrl } from '../../shared/utilities/baseUrl';
 import { CategoryBase } from '../../shared/models/category-base';
 import { BaseOut } from '../../shared/models/base-out';
+import { PaginationParams } from '../../shared/models/pagination-params';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +14,11 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  get(pg_params: PaginationParams) {
-    const params = new HttpParams()
-      .set("name", pg_params.name)
-      .set("limit", pg_params.limit)
-      .set("page", pg_params.page)
+  get(filter: PaginationParams) {
+    let params = new HttpParams()
+    if (filter.name) params = params.set("name", filter.name)
+    if (filter.limit) params = params.set("limit", filter.limit)
+    if (filter.page) params = params.set("page", filter.page)
     const headers = new HttpHeaders({
       "content-type": "application/json",
       Authorization: "Bearer " + localStorage.getItem("token")
